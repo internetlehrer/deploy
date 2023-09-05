@@ -1,3 +1,18 @@
+# Modified Installer for Ubuntu 20.04
+
+Support for Ubuntu 22.04 is coming soon.
+
+**After Installation the following steps are necessary:**
+```sh
+sudo sed -i "s|mongodb://localhost:27017/learninglocker_v2?replicaSet=rs0|mongodb://localhost:27017/learninglocker_v2|g" /usr/local/learninglocker/current/xapi/.env
+
+sudo -u learninglocker pm2 kill
+
+sudo service pm2-learninglocker restart
+
+systemctl status pm2-learninglocker.service
+```
+
 # Learning Locker Open Source installer
 
 This is the HT2 Labs Learning Locker Open Source installer. It's designed to walk you through the process of downloading the code, running any steps needed (such as compilation) and generally setting up a complete working instance.
@@ -12,16 +27,15 @@ To install or update Learning Locker, run the install script via one of the comm
 
 **Install with cURL**
 ```sh
-curl -o- -L https://raw.githubusercontent.com/LearningLocker/deploy/master/deployll.sh > deployll.sh && bash deployll.sh
+curl -o- -L https://raw.githubusercontent.com/internetlehrer/deploy/master/deployll.sh > deployll.sh && bash deployll.sh
 ```
 **Install with Wget**:
 ```sh
-wget -qO deployll.sh https://raw.githubusercontent.com/LearningLocker/deploy/master/deployll.sh && bash deployll.sh
+wget -qO deployll.sh https://raw.githubusercontent.com/internetlehrer/deploy/master/deployll.sh && bash deployll.sh
 ```
 
 ### Fully Supported Operating Systems
-	Ubuntu 16
-	Ubuntu 18 [RECOMMENDED]
+	Ubuntu 20 [RECOMMENDED]
 The install script may work on other systems, but this is not guaranteed
 
 ### Recommended Hardware

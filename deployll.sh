@@ -443,7 +443,7 @@ function base_install ()
                     output_log "Cloning main repo with user: ${GIT_USER}"
                 fi
             else
-                MAIN_REPO=https://github.com/LearningLocker/learninglocker
+                MAIN_REPO=https://github.com/internetlehrer/learninglocker
             fi
             # clone repo
             git clone -q -b ${GIT_BRANCH} $MAIN_REPO ${WEBAPP_SUBDIR}
@@ -858,6 +858,10 @@ function debian_mongo ()
             if [[ $OS_VNO == "18.04" ]]; then
                 echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.0.list
             fi
+            if [[ $OS_VNO == "20.04" ]]; then
+                curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
+                echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+            fi
             apt-get update >> $OUTPUT_LOG 2>>$ERROR_LOG
             systemctl unmask mongod
             apt-get -qq -y install mongodb-org >> $OUTPUT_LOG 2>>$ERROR_LOG
@@ -1204,8 +1208,8 @@ MONGO_INSTALLED=false
 REDIS_INSTALLED=false
 PM2_OVERRIDE=false
 NODE_OVERRIDE=false
-NODE_VERSION=10.x
-NODE_VERSION_STRING=v10
+NODE_VERSION=18.x
+NODE_VERSION_STRING=v18
 UPDATE_MODE=false
 GIT_ASK=false
 GIT_REV=false
@@ -2490,7 +2494,7 @@ if [[ $SETUP_AMI == true ]]; then
         rm -R /tmp/deploy
     fi
     # git clone
-    git clone https://github.com/LearningLocker/deploy deploy
+    git clone https://github.com/internetlehrer/deploy deploy
 fi
 
 
